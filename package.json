@@ -18,14 +18,7 @@
     "Visualization"
   ],
   "activationEvents": [
-    "onLanguage:shellscript",
-    "onView:slurm-gui.jobs",
-    "onView:slurm-gui.nodes",
-    "onView:slurm-gui.accounts",
-    "onCommand:slurm-gui.refresh",
-    "onCommand:slurm-gui.focus",
-    "onCommand:slurm-gui.run",
-    "onCommand:slurm-gui.cancelJob"
+    "onLanguage:shellscript"
   ],
   "main": "./src/extension.js",
   "contributes": {
@@ -132,17 +125,10 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@types/vscode": "^1.146.0",
-    "@types/node": "24.x",
-    "eslint": "^10.5.0",
-    "globals": "^17.13.0"
+    "globals": "^17.14.0"
   },
   "dependencies": {
     "dayjs": "^1.11.23",
     "slurmjs": "^1.1.0"
-  },
-  "overrides": {
-    "diff": "^8.0.4",
-    "serialize-javascript": "^7.0.6"
   }
 }
