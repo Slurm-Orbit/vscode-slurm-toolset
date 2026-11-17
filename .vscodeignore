@@ -1,0 +1,9 @@
+.vscode/**
+.gitignore
+.yarnrc
+.npmrc
+bun.lock
+vsc-extension-quickstart.md
+**/jsconfig.json
+**/*.map
+**/eslint.config.mjs

@@ -1,0 +1,144 @@
+{
+  "name": "vscode-slurm-toolset",
+  "displayName": "VSCode Slurm Toolset",
+  "description": "Slurm 脚本语法支持与集群可视化工具",
+  "version": "0.0.1",
+  "publisher": "secretqsan",
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.146.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onLanguage:shellscript",
+    "onView:slurm-gui.jobs",
+    "onView:slurm-gui.nodes",
+    "onView:slurm-gui.accounts",
+    "onCommand:slurm-gui.refresh",
+    "onCommand:slurm-gui.focus",
+    "onCommand:slurm-gui.run",
+    "onCommand:slurm-gui.cancelJob"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "shellscript",
+        "extensions": [".slurm", ".sbatch"]
+      }
+    ],
+    "grammars": [
+      {
+        "scopeName": "slurm.injection",
+        "path": "./syntaxes/slurm.tmLanguage.json",
+        "injectTo": [
+          "source.shell"
+        ]
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "slurm-gui",
+          "title": "Slurm",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "slurm-gui": [
+        {
+          "id": "slurm-gui.jobs",
+          "name": "作业历史"
+        },
+        {
+          "id": "slurm-gui.nodes",
+          "name": "节点"
+        },
+        {
+          "id": "slurm-gui.accounts",
+          "name": "账户"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "slurm-gui.refresh",
+        "title": "刷新",
+        "icon": "$(refresh)",
+        "category": "Slurm"
+      },
+      {
+        "command": "slurm-gui.focus",
+        "title": "打开侧边栏",
+        "category": "Slurm"
+      },
+      {
+        "command": "slurm-gui.run",
+        "title": "运行",
+        "icon": "$(play)",
+        "category": "Slurm"
+      },
+      {
+        "command": "slurm-gui.cancelJob",
+        "title": "取消作业",
+        "icon": "$(stop-circle)",
+        "category": "Slurm"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "slurm-gui.run",
+          "when": "resourceExtname == .slurm",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "slurm-gui.run",
+          "when": "resourceExtname == .slurm"
+        },
+        {
+          "command": "slurm-gui.cancelJob",
+          "when": "false"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "slurm-gui.cancelJob",
+          "when": "view == slurm-gui.jobs && viewItem == slurmJob.running",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "slurm-gui.refresh",
+          "when": "view == slurm-gui.jobs || view == slurm-gui.nodes || view == slurm-gui.accounts",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.146.0",
+    "@types/node": "24.x",
+    "eslint": "^10.5.0",
+    "globals": "^17.13.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.23",
+    "slurmjs": "^1.1.0"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  }
+}
